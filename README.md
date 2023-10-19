@@ -126,6 +126,7 @@ color
     </body>
 </html>
 
+script.js
 
 function change_bg(){
    document.getElementById('box').style.backgroundColor = document.getElementById('bg_color').value;
@@ -190,6 +191,7 @@ jquery cal
 </html>
 
 angular.js
+
 <!DOCTYPE html>
 <html>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -229,9 +231,51 @@ angular.js
               });
             });
             </script>
-      
-              
+
+        
 
       </body>
 </html>
 !!
+
+
+jquery
+
+
+change()
+$(document).ready(function(){
+$("#clr").change(function(){
+let item = $('#clr').val();
+$('.box').css('background-color',item);
+})
+});
+
+---
+Hiding and Showing HTML elements
+ hide(), show()
+ Toggle between hide and show
+ toggle()
+ Fading HTML elements
+ fadeIn(), fadeOut(), fadeToggle(), fadeTo()
+ Sliding HTML elements
+ slideDown(), slideUp(),slideToggle()
+ Animation
+ animate(), stop()
+
+---
+
+$(document).ready(function(){
+//hide effect
+$("#btn1").click(function(){
+$('.box').hide(2000,function(){
+$("#status").html("<p style='color:red;'>Element Hidden</p>");
+});
+})
+//show effect
+$("#btn2").click(function(){
+$('.box').show(2000,function(){
+$("#status").html("<p style='color:green;'>Element Shown</p>");
+});
+})
+});
+
