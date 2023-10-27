@@ -1,14 +1,20 @@
-%{
-int word_count = 0;
-%}
+lex program to count number of words
 
-%%
-[a-zA-Z]+ { word_count++; }
-.|\n     { /* Ignore other characters and newlines */ }
-%%
-
-int main() {
-    yylex();
-    printf("Total number of words: %d\n", word_count);
-    return 0;
-}
+%{ 
+#include<stdio.h> 
+#include<string.h> 
+int i = 0; 
+%} 
+/* Rules Section*/
+%% 
+([a-zA-Z0-9])* {i++;} /* Rule for counting 
+						number of words*/
+"\n" {printf("%d\n", i); i = 0;} 
+%% 
+int yywrap(void){} 
+int main() 
+{ 
+	// The function that starts the analysis 
+	yylex(); 
+	return 0; 
+} 
