@@ -1,213 +1,89 @@
-# compile
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+path = "drive/My Drive/Lab/Sem_6 LAB/ML/Data/Toyato.csv"
+df = pd.read_csv(path)
 
-lex text.l
-cc lex.yy.c
-./a.out
+# First 5
+df.head(5)
+df.tail(5)
 
-# lex program to count number of words
-%{ 
-#include<stdio.h> 
-#include<string.h> 
-int i = 0; 
-%} 
-%% 
-([a-zA-Z0-9])* {i++;} 
-"\n" {printf("%d\n", i); i = 0;} 
-%% 
-int yywrap(void){} 
-int main() 
-{ 
-	// The function that starts the analysis 
-	yylex(); 
-	return 0; 
-} 
+# no.of rows and columns
+df.shape()
 
-# token seperation
-%{
+# no of categorical and numberical columns
+df._get_numeric_data().count()
+df_ = df[df.isin(df._get_numeric_data()) == False]
+df_.count()
 
-%}
-%%
-[0-9]+[.][0-9]+ printf("%s is a floating point number\n",yytext);
-int|float|char|double|void printf("%s is a datatype\n",yytext);
-[0-9]+ printf("%s is an integer number\n",yytext);
-[a-z]+[()] printf("%s is a function\n",yytext);
-[a-z]+ printf("%s is an identifier\n",yytext);
-[+=*/-] printf("%s is an operator\n",yytext);
-; printf("%s is an delimiter\n",yytext);
-, printf("%s is a separator\n",yytext);
-[#][a-z\.h]+ printf("%s is a preprocessor\n",yytext);
-%%
-int yywrap(void)
-{
-        return 1;
-}
-int main()
-{
-  // reads input from a file named test.c rather than terminal
-  freopen("text.c", "r", stdin);
-        yylex();
-        return 0;
-}
+# For numerical columns, display the min, max and mean
+df.describe()
 
+# Display the columns with null values
+df.isnull().sum()
 
+# Calculate the 5 number summary for “age” column and correlate with box plot
+print(df['Age'].mean())
+print(df['Age'].min())
+print(df['Age'].max())
+def get_percentile(df, percentile_rank):
+    df = df.sort_values(by='Age').reset_index()
+    index = (len(df.index)-1) * percentile_rank / 100.0
+    index = int(index)
+    return df.at[index, 'Age']
+print(get_percentile(df, 25))
+print(get_percentile(df, 75))
 
-text.c
-int main()
-{
-int a = 2;
-float b = 3;  
-return 0;}
+plt.boxplot(df['Age']);
 
-# deterministic finite automata
+# Find the correlation for the input features Age, Price, Quarterly_Tax, Weight
+import seaborn as sea
+sea.heatmap(df[['Age', 'Price', 'Quarterly_Tax', 'Weight']].corr());
 
-no_states = int(input())
-transition_table = {}
-index = {}
-for i in range(no_states):
-  x,y,z = input().split()
-  transition_table[x] = [y,z]
-  index[i] = x
+# Display the feature pairs with high positive correlation and high negative correlation values for the given input features
+c = df.select_dtypes(include=np.number).corr().abs()
+c = c.unstack().sort_values()
+print(c)
 
-  3
-A B C
-C B A
-B B A
+# Display the feature pairs that have correlation value greater than 70% for the given input features
+c = df.select_dtypes(include=np.number).corr().abs()
+c = c.unstack().sort_values()
+print(c > 7)
 
-in_str = input()
-state = 0
-for i in in_str:
-  if i == 'a':
-    state = (list(index.keys())[list(index.values()).index(transition_table[index[state]][0])])
-  else:
-    state = (list(index.keys())[list(index.values()).index(transition_table[index[state]][1])])
-if state == no_states-1:
-  print(True)
-else:
-  print(False)
+# Analyze the skewness of the feature using plot distribution graph for the “cc” column and display whether the feature is right skew, left skew or no skew
+df.cc.value_counts().plot(kind='bar', figsize=(10,5));
 
-aabb
-False
+# Perform univariate analysis for categorical variable “Fuel_Type” using bar plot with counts of observations.
+plt.bar(df['Fuel_Type'], df.index)
 
-# yacc 
+# Perform univariate analysis for continuous variable “Age” using swarm plot and violin plot
+sea.swarmplot(df['Age'])
+sea.violinplot(df["Age"])
 
-%{
-#include <math.h>
-#include <stdio.h>
-#include <ctype.h>
-#define YYSTYPE double
-%}
-%%
-input :
-    | input line
-    ;
-line : '\n'
-    | expr '\n' { printf("Result is %g", $1); }
-    ;
-expr : expr '+' term { $$ = $1 + $3; }
-     | expr '-' term { $$ = $1 - $3; }
-     | term { $$ = $1; }
-     ;
-term : term '*' factor { $$ = $1 * $3; }
-     | term '/' factor { $$ = $1 / $3; }
-     | factor { $$ = $1; }
-     ;
-factor : NUM { $$ = $1; }
-       ;
-NUM : digit { $$ = $1; }
-    | NUM digit { $$ = $1 * 10 + $2; }
-    ;
-digit : '0' { $$ = 0; }
-      | '1' { $$ = 1; }
-      | '2' { $$ = 2; }
-      | '3' { $$ = 3; }
-      | '4' { $$ = 4; }
-      | '5' { $$ = 5; }
-      | '6' { $$ = 6; }
-      | '7' { $$ = 7; }
-      | '8' { $$ = 8; }
-      | '9' { $$ = 9; }
-      ;
-%%
-int yylex() {
-    return getchar();
-}
-int main() {
-    return yyparse();
-}
-void yyerror(char *s) {
-    printf("%s", s);
-}
+# Display the scatter plot to show the relationship between two continuous variables “Age” and “Price”
+plt.scatter(df['Age'], df['Price'])
 
-yacc program.c
-gcc y.tab.c
-./a.out
+# Perform a bivariate analysis between categorical variable and continuous variable of “Fuel_Type” and “Age” using categorical box plot
+sea.catplot(x='Fuel_Type', y='Age', data=df, kind='box')
 
-# lex -word starting with vowels
+# Perform a multivariate analysis between input features “Age”, “Price”, “KM”, “Weight” using pair plot with respect to Fuel_Type as hue.
+pd.plotting.scatter_matrix(df[['Age', 'Price', 'KM', 'Weight']], diagonal="kde",figsize=(20,15))
 
-%{
-#include <stdio.h>
-%}
-VOWEL [aeiouAEIOU]
-WORD [a-zA-Z]+
+1b
+# Calculate the % of missing values in a column.
+(df.isnull().sum()/len(df))*100
 
-%%
-^({VOWEL}{WORD})    printf("Word starting with a vowel: %s\n", yytext);
-.|\n                
-%%
-int yywrap() {
-    return 0;
-}
-int main() {
-    yylex();
-    return 0;
-}
+# Replace missing value with mean if the % of missing value is less than 10%.
+for i in (df.columns[df.isnull().mean() < 0.10]): 
+  df[i].fillna(df.mean())
 
-# operators
+# Perform the mode imputation for a categorical data.
+df.fillna(df.mode())
 
-%{
-#include <stdio.h>
-%}
+EP2 
+#  Split the dataset into train and test sets.
+from sklearn.model_selection import train_test_split
+train_df, test_df = train_test_split(df, test_size=0.2, random_state=42
 
-OPERATOR [+|\-|*|/|=|>|<|%|&|!|^|~|\?|:|\|]
-CONSONANT [bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]
-
-%%
-{OPERATOR}      printf("Operator: %s\n", yytext);
-{CONSONANT}+    printf("Consonant: %s\n", yytext);
-.|\n            // skip other characters
-%%
-
-int yywrap() {
-    return 0;
-}
-
-int main() {
-    yylex();
-    return 0;
-}
-
-# odd or even
-%{
-#include <stdio.h>
-%}
-DIGIT [0-9]
-%%
-{DIGIT}+ {
-    int num = atoi(yytext);
-    if (num % 2 == 0) {
-        printf("%d is even\n", num);
-    } else {
-        printf("%d is odd\n", num);
-    }
-}
-.|\n    // skip other characters
-%%
-int yywrap() {
-    return 0;
-}
-int main() {
-    yylex();
-    return 0;
-}
-
-
+#  check shape of training and test sets
+print(train_df.shape, test_df.shape)
