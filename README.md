@@ -1,89 +1,258 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-path = "drive/My Drive/Lab/Sem_6 LAB/ML/Data/Toyato.csv"
-df = pd.read_csv(path)
+# display its binary equivalent.
 
-# First 5
-df.head(5)
-df.tail(5)
+package experment1;
+import java.util.Scanner;
+public class sample5 {
+public static void main(String[] args) {
+Scanner sc=new Scanner(System.in);
+System.out.println("enter the number:");
+int N = sc.nextInt();
+int r;
+int m=1;
+int binary=0;
+while ( N > 0)
+{
+r = N % 2;
+N = N / 2;
+binary = binary + (r*m);
+m = m * 10;
+}
+System.out.println(binary);
+}
+}
 
-# no.of rows and columns
-df.shape()
+# n Array. Find out the sum of all the odd numbers and even numbers
 
-# no of categorical and numberical columns
-df._get_numeric_data().count()
-df_ = df[df.isin(df._get_numeric_data()) == False]
-df_.count()
+importjava.util.Scanner;
+public class sample1 {
+public static void main(String[] args) {
+int i;
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter the size of an array : ");
+int size = sc.nextInt();
+int a[] = new int[size];
+System.out.println("Enter the " + size + " elements");
+for( i=0; i<a.length; i++)
+{
+a[i] = sc.nextInt();
+}
+System.out.println("The elements are : ");
+for( i=0; i<a.length; i++)
+{
+System.out.print(a[i]+" ");
+}
+System.out.println("\nThe list of Odd & Even");
+int even=0, odd=0;
+for(i=0; i<a.length; i++)
+{
+if(a[i] %2 == 0)
+even += a[i];
+else
+odd += a[i];
+}
+System.out.println("Even : " + even);
+System.out.println("Odd :" + odd);
+}
 
-# For numerical columns, display the min, max and mean
-df.describe()
+# Display all duplicate characters from the array vovles and consonants
+import java.util.*;
+public class Sample2 {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in); char[] v = { 'a', 'e', 'i', 'o', 'u' };
+int vc = 0, n, flag = 0, dcc = 0; char arr[];
+char dcarr[];
+System.out.println("Enter the Size of the array: "); n = sc.nextInt();
+arr = new char[n]; dcarr = new char[n];
+System.out.println("Enter the characters"); for (int i = 0; i < n; i++) {
+arr[i] = sc.next().charAt(0); for (int j = 0; j < 5; j++)
+if (arr[i] == v[j])
+vc = vc + 1;
+}
+for (int i = 0; i < n; i++) {
+for (int j = 0; j < n; j++) { if (i != j) {
+if (arr[i] == arr[j]) {
+flag = 0;
+for (int k = 0; k < n; k++) {
+if (dcarr[k] == arr[i])
+flag = 1;
+}
+if (flag != 1) {
+dcarr[dcc] = arr[i]; dcc = dcc + 1;
+}
+}
+}
+}
+}
+System.out.print("The Duplicate Characters are : "); for (int i = 0; i <
+dcc; i++)
+System.out.print(dcarr[i] + " "); System.out.println("");
+System.out.println("Number of vowels: " + vc);
+System.out.println("Number of consonants: " + (n-vc));
+}
+}
 
-# Display the columns with null values
-df.isnull().sum()
+# 3 arrays where first array stores all small alphabetical letters,
 
-# Calculate the 5 number summary for “age” column and correlate with box plot
-print(df['Age'].mean())
-print(df['Age'].min())
-print(df['Age'].max())
-def get_percentile(df, percentile_rank):
-    df = df.sort_values(by='Age').reset_index()
-    index = (len(df.index)-1) * percentile_rank / 100.0
-    index = int(index)
-    return df.at[index, 'Age']
-print(get_percentile(df, 25))
-print(get_percentile(df, 75))
+import java.util.Scanner;
+import java.util.Random;
+public class Sample3 {
+public static void main(String[] args) {
+Random random = new Random();
+random.setSeed(1234567890);
+Scanner in = new Scanner(System.in);
+int l;
+String password="";
+char[] small =
+{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+char[] capital= {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I','J', 'K', 'L', 'M',
+'N', 'O', 'P', 'Q','R','S','T', 'U', 'V','W', 'X', 'Y', 'Z'};
+int[] numbers = {0,1,2,3,4,5,6,7,8,9};
+System.out.println("Enter the Length of the Password");
+l = in.nextInt();
+for(int i=0;i<l;i++){
+switch(random.nextInt(3)) {
+case 0:
+case 1:
+password = password + capital[random.nextInt(26)];
+break;
+case 2:
+password = password +
+(char)(numbers[random.nextInt(10)]+'0');
+break;
+}
+}
+System.out.println(password);
+}
+}
 
-plt.boxplot(df['Age']);
+# Write the java program to get a String from the user and print the number of Letters and Digits
 
-# Find the correlation for the input features Age, Price, Quarterly_Tax, Weight
-import seaborn as sea
-sea.heatmap(df[['Age', 'Price', 'Quarterly_Tax', 'Weight']].corr());
+import java.util.Scanner;
+public class sample1 {
+public static void main(String[] args)
+{
+Scanner sc = new Scanner(System.in);
+System.out.println("Enter a sentence:");
+char[] s = sc.nextLine().toCharArray();
+int L=0 , D=0;
+boolean l,d;
+for (char ch:s)
+{
+if(Character.isAlphabetic(ch))
+{
+L++;
+}
+else if(Character.isDigit(ch))
+{
+D++;
+}
+}
+System.out.println("LETTER: "+ L);
+System.out.println("DIGITS: "+ D);
+}
+}
 
-# Display the feature pairs with high positive correlation and high negative correlation values for the given input features
-c = df.select_dtypes(include=np.number).corr().abs()
-c = c.unstack().sort_values()
-print(c)
+# print the number ofspaces, words
+import java.util.Scanner;
+public class sample2 {
+public static void main(String[] args)
+{
+Scanner sc = new Scanner(System.in);
+System.out.println("Enter a paragraph:");
+String s=sc.nextLine();
+int scount=0,wcount=0,ccount=0;
+String[] l=s.split("\n");
+char[] ch=new char[s.length()];
+for(inti=0;i<s.length();i++)
+{
+char c=s.charAt(i);
+if(((i>0)&& (s.charAt(i)!=' ') &&(s.charAt(i-1)==' '))
+|| ((s.charAt(i)!=' ')&&(i==0)))
+{
+wcount++;
+}
+if(c!=32)
+{
+ccount++;
+}
+else if(c==32)
+{
+scount++;
+}
+/*else if(ch=='\n')
+{
+lcount++;
+}*/
+}
+System.out.println("Number of spaces:"+scount);
+System.out.println("Number of words:"+wcount);
+System.out.println("Number of characters:"+ccount);
+System.out.println("Number of lines:"+l.length);
+}
+}
 
-# Display the feature pairs that have correlation value greater than 70% for the given input features
-c = df.select_dtypes(include=np.number).corr().abs()
-c = c.unstack().sort_values()
-print(c > 7)
+# string from the user and print The largest and shortest words
 
-# Analyze the skewness of the feature using plot distribution graph for the “cc” column and display whether the feature is right skew, left skew or no skew
-df.cc.value_counts().plot(kind='bar', figsize=(10,5));
+import java.util.Scanner;
+public class sample3 {
+public static void main(String[] args)
+{
+Scanner sc = new Scanner(System.in);
+System.out.println("Enter a paragraph:");
+String s = sc.nextLine();
+String[] Sarr = s.split(" ");
+String Greatest, Smallest;
+int gl, sl;
+Greatest = Sarr[0];
+Smallest = Sarr[0];
+sl = Sarr[0].length();
+gl = Sarr[0].length();
+for(String S : Sarr)
+{
+if(S.length() > gl)
+{
+gl = S.length();
+Greatest = S;
+}
+else if(S.length() < sl)
+{
+sl = S.length();
+Smallest = S;
+}
+}
+System.out.println("Greatest word: "+ Greatest + " - " + gl + "
+Characters");
+System.out.println("Shortest word: "+ Smallest + " - " + sl + "
+Characters");
+}
+}
 
-# Perform univariate analysis for categorical variable “Fuel_Type” using bar plot with counts of observations.
-plt.bar(df['Fuel_Type'], df.index)
+# multiplication table of number 5 for every 3 seconds
+import java.util.Scanner;
+class thread implements Runnable {
+public void run() {
+Scanner scan=new Scanner(System.in);
+System.out.print("Enter Table : ");
+int num=scan.nextInt();
+for (int i=1;i<=10;i++) {
+System.out.println(num+"x"+i+"="+(num*i));
+try {
+Thread.sleep(3000);
+}
+catch (Exception e) {
+System.out.println(e);
+}
+}
+System.out.println("Program Executed
+Successfully");
+scan.close();
+}
+}
+public class table {
+public static void main(String[] args) {
+thread obj=new thread();
+Thread thread=new Thread(obj);
+thread.start();
+}
+}
 
-# Perform univariate analysis for continuous variable “Age” using swarm plot and violin plot
-sea.swarmplot(df['Age'])
-sea.violinplot(df["Age"])
-
-# Display the scatter plot to show the relationship between two continuous variables “Age” and “Price”
-plt.scatter(df['Age'], df['Price'])
-
-# Perform a bivariate analysis between categorical variable and continuous variable of “Fuel_Type” and “Age” using categorical box plot
-sea.catplot(x='Fuel_Type', y='Age', data=df, kind='box')
-
-# Perform a multivariate analysis between input features “Age”, “Price”, “KM”, “Weight” using pair plot with respect to Fuel_Type as hue.
-pd.plotting.scatter_matrix(df[['Age', 'Price', 'KM', 'Weight']], diagonal="kde",figsize=(20,15))
-
-1b
-# Calculate the % of missing values in a column.
-(df.isnull().sum()/len(df))*100
-
-# Replace missing value with mean if the % of missing value is less than 10%.
-for i in (df.columns[df.isnull().mean() < 0.10]): 
-  df[i].fillna(df.mean())
-
-# Perform the mode imputation for a categorical data.
-df.fillna(df.mode())
-
-EP2 
-#  Split the dataset into train and test sets.
-from sklearn.model_selection import train_test_split
-train_df, test_df = train_test_split(df, test_size=0.2, random_state=42
-
-#  check shape of training and test sets
-print(train_df.shape, test_df.shape)
