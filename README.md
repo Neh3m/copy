@@ -1,3 +1,54 @@
+#palindrom 
+
+package array;
+import java.util.*;
+public class Array_list {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+System.out.println("enter number: ");
+int n = sc.nextInt();
+int sum = 0;
+int temp = n;
+while (n>0)
+{
+int row = n%10;
+Sum = sum 10+rem;
+n = n/10;
+}
+if (sum==temp)
+{
+System.out.println("palindrome");
+}
+else{
+System.out.println("not palindrome");
+}
+
+# armstron 
+
+package array;
+import java.util.*;
+public class Array_list {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+System.out.println("enter number: ");
+int n = sc.nextInt();
+int sum = 0;
+int temp = n;
+while(n>0)
+int rem n%10;
+I am = am+rem*rem*rem;
+n = n/10;
+}
+if (sum==temp)
+{
+}
+System.out.println("armstrong");
+else{
+System.out.println("not armstrong");
+}
+}
+
+
 # display its binary equivalent.
 
 package experment1;
@@ -18,6 +69,26 @@ binary = binary + (r*m);
 m = m * 10;
 }
 System.out.println(binary);
+}
+}
+
+# fibbinochi
+
+package array;
+import java.util.*;
+public class Array_list {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+int a = 0;
+int b = 1;
+System.out.println("enter number: ");
+int n = sc.nextInt();
+for (int i=0;i<n;i++)
+{
+System.out.println(a);
+int c = a+b;
+a = b
+b = c
 }
 }
 
@@ -52,6 +123,22 @@ odd += a[i];
 }
 System.out.println("Even : " + even);
 System.out.println("Odd :" + odd);
+}
+
+# even or odd
+
+import java.util.Scanner;
+public class Endsem
+public static void main(String[] args) {
+Scanner Sc= new Scanner(System.in); System.out.println("Enter any number: ");
+int num = sc.nextInt();
+if (num%2==0) {
+System.out.println("Even");
+}
+else {
+System.out.println("odd");
+}
+
 }
 
 # Display all duplicate characters from the array vovles and consonants
